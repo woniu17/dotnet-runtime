@@ -95,6 +95,7 @@ build_Tests()
     export __BuildTestDir
     export __BuildTestTree
     export __RuntimeFlavor
+    export __BuildLogRootName
     export __CopyNativeProjectsAfterCombinedTestBuild
     export __CopyNativeTestBinaries
     export __Priority

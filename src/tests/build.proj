@@ -461,7 +461,7 @@
       <GroupBuildCmd>$(GroupBuildCmd) "/p:__SkipRestorePackages=1"</GroupBuildCmd>
       <GroupBuildCmd>$(GroupBuildCmd) /nodeReuse:false</GroupBuildCmd>
       <GroupBuildCmd>$(GroupBuildCmd) /maxcpucount</GroupBuildCmd>
-      <GroupBuildCmd>$(GroupBuildCmd) /bl:$(ArtifactsDir)/log/$(Configuration)/InnerManagedTestBuild.$(__TestGroupToBuild).binlog</GroupBuildCmd>
+      <GroupBuildCmd>$(GroupBuildCmd) /bl:$(ArtifactsDir)/log/$(Configuration)/$(__BuildLogRootName).InnerManagedTestBuild.$(__TestGroupToBuild).binlog</GroupBuildCmd>
     </PropertyGroup>
 
     <Message Importance="High" Text="$(MsgPrefix)Building managed test group $(__TestGroupToBuild): $(GroupBuildCmd)" />
