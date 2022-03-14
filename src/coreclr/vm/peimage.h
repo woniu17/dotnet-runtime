@@ -147,6 +147,8 @@ public:
     HANDLE GetFileHandle();
     HRESULT TryOpenFile(bool takeLock = false);
 
+    void ReportBrokenFile(HRESULT hr);
+
     void GetMVID(GUID *pMvid);
     BOOL HasV1Metadata();
     IMDInternalImport* GetMDImport();

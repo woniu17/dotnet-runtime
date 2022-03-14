@@ -392,9 +392,7 @@ void PEImage::OpenMDImport()
                                                  
         if (FAILED(hr))
         {
-            PTR_PEImageLayout layout = GetOrCreateLayout(PEImageLayout::LAYOUT_ANY);
-            SString peAssemblyString;
-            peAssemblyString.Printf(W("HR %08x: size = %I64d; name = %s\n"), hr, (int64_t)layout->GetSize(), GetPathForErrorMessages());
+            ReportBrokenFile(hr);
             IfFailThrow(hr);
         }
 
@@ -422,6 +420,30 @@ void PEImage::OpenMDImport()
     }
     _ASSERTE(m_pMDImport);
 
+}
+
+void PEImage::ReportBrokenFile(HRESULT hr)
+{
+    PTR_PEImageLayout layout = GetOrCreateLayout(PEImageLayout::LAYOUT_ANY);
+    SString peAssemblyString;
+    LPCWSTR path = GetPathForErrorMessages();
+    peAssemblyString.Printf(W("HR %08x: size = %I64d; name = %s\n"), hr, (int64_t)layout->GetSize(), path);
+        PrintToStdOutW(peAssemblyString.GetUnicode());
+#ifdef TARGET_WINDOWS
+    LPCWSTR filePos = path;
+    for (LPCWSTR p = path; *p; p++)
+    {
+        if (*p == '\\' || *p == '/')
+        {
+            filePos = p;
+        }
+    }
+    wchar_t dumpPath[MAX_PATH];
+    GetEnvironmentVariableW(W("HELIX_WORKITEM_UPLOAD_ROOT"), dumpPath, MAX_PATH);
+    SString targetPath;
+    targetPath.Printf(W("%s%s.dmp"), dumpPath, filePos);
+    CopyFileW(path, targetPath.GetUnicode(), FALSE);
+#endif
 }
 
 void PEImage::GetMVID(GUID *pMvid)

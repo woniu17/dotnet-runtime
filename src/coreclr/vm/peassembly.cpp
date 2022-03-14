@@ -711,11 +711,7 @@ PEAssembly::PEAssembly(
     // Make sure this is an assembly
     if (!m_pMDImport->IsValidToken(TokenFromRid(1, mdtAssembly)))
     {
-        PTR_PEImageLayout layout = pPEImage->GetOrCreateLayout(PEImageLayout::LAYOUT_ANY);
-        SString peAssemblyString;
-        peAssemblyString.Printf(W("PEAssembly: size = %I64d; name = %s\n"), (int64_t)layout->GetSize(), pPEImage->GetPathForErrorMessages());
-        PrintToStdOutW(peAssemblyString.GetUnicode());
-
+        pPEImage->ReportBrokenFile(COR_E_ASSEMBLYEXPECTED);
         ThrowHR(COR_E_ASSEMBLYEXPECTED);
     }
 
