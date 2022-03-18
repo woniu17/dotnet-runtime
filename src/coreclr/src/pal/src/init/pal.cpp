@@ -196,11 +196,11 @@ Return:
 int
 PALAPI
 PAL_InitializeWithFlags(
-    int argc,
-    const char *const argv[],
+    // int argc,
+    // const char *const argv[],
     DWORD flags)
 {
-    return Initialize(argc, argv, flags);
+    return Initialize(0, NULL, flags);
 }
 
 /*++

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export NUGET_PACKAGES=/runtime/.nuget/packages
+
 build_test_wrappers()
 {
     if [[ "$__BuildTestWrappers" -ne -0 ]]; then

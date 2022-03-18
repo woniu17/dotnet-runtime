@@ -1,3 +1,6 @@
+add_subdirectory(profiler/coreclrhelper)
+add_subdirectory(profiler)
+
 include_directories("inc")
 include_directories("debug/inc")
 include_directories("debug/inc/${ARCH_SOURCES_DIR}")

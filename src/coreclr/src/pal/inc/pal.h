@@ -352,7 +352,7 @@ PAL_Initialize(
     char * const argv[]);
 
 PALIMPORT
-void
+int
 PALAPI
 PAL_InitializeWithFlags(
     DWORD flags);

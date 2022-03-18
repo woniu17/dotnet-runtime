@@ -95,6 +95,13 @@ fi
 pushd "$3"
 
 # Include CMAKE_USER_MAKE_RULES_OVERRIDE as uninitialized since it will hold its value in the CMake cache otherwise can cause issues when branch switching
+echo $cmake_command \
+  -G "$generator" \
+  "-DCMAKE_BUILD_TYPE=$buildtype" \
+  "-DCMAKE_INSTALL_PREFIX=$__CMakeBinDir" \
+  $cmake_extra_defines \
+  $__UnprocessedCMakeArgs \
+  "$1"
 $cmake_command \
   -G "$generator" \
   "-DCMAKE_BUILD_TYPE=$buildtype" \

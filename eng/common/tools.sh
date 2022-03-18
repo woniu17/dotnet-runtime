@@ -313,6 +313,8 @@ function GetNuGetPackageCachePath {
   fi
 
   # return value
+  export NUGET_PACKAGES=/runtime/.nuget/packages
+  echo "$NUGET_PACKAGES"
   _GetNuGetPackageCachePath=$NUGET_PACKAGES
 }
 
@@ -364,6 +366,7 @@ function InitializeToolset {
   fi
 
   echo '<Project Sdk="Microsoft.DotNet.Arcade.Sdk"/>' > "$proj"
+  echo MSBuild-Core "$proj" $bl /t:__WriteToolsetLocation /clp:ErrorsOnly\;NoSummary /p:__ToolsetLocationOutputFile="$toolset_location_file"
   MSBuild-Core "$proj" $bl /t:__WriteToolsetLocation /clp:ErrorsOnly\;NoSummary /p:__ToolsetLocationOutputFile="$toolset_location_file"
 
   local toolset_build_proj=`cat "$toolset_location_file"`
@@ -409,6 +412,7 @@ function MSBuild {
     args=( "${args[@]}" "-logger:$logger_path" )
   fi
 
+  echo MsBuild__MSBuild-Core ${args[@]}
   MSBuild-Core ${args[@]}
 }
 
@@ -435,6 +439,10 @@ function MSBuild-Core {
   function RunBuildTool {
     export ARCADE_BUILD_TOOL_COMMAND="$_InitializeBuildTool $@"
 
+    echo MSBuild-Core__RunBuildTool "$_InitializeBuildTool" "$@"
+    echo env
+    env
+    echo env finish
     "$_InitializeBuildTool" "$@" || {
       local exit_code=$?
       Write-PipelineTaskError "Build failed (exit code '$exit_code')."
