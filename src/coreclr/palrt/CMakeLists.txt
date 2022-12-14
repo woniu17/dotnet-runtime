@@ -8,10 +8,8 @@ set(PALRT_SOURCES
     variant.cpp
 )
 
-add_library_clr(palrt
-    STATIC
-    ${PALRT_SOURCES}
-)
+add_library_clr(palrt STATIC ${PALRT_SOURCES})
+add_library_clr(palrt_obj OBJECT ${PALRT_SOURCES})
 
 # Install the static PAL library for VS
 install_clr(TARGETS palrt DESTINATIONS lib)

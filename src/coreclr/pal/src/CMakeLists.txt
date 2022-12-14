@@ -230,6 +230,13 @@ add_library(coreclrpal
   ${LIBUNWIND_OBJECTS}
 )
 
+add_library(coreclrpal_obj
+  OBJECT
+  ${SOURCES}
+  ${ARCH_SOURCES}
+  ${PLATFORM_SOURCES}
+)
+
 # Build separate pal library for DAC (addition to regular pal library)
 if(CLR_CMAKE_TARGET_OSX)
   set(LIBUNWIND_DAC_OBJECTS $<TARGET_OBJECTS:libunwind_dac>)
