@@ -5,7 +5,7 @@ int my_api();
 int
 main()
 {
-    printf("hello, world\n");
     my_api();
+    printf("hello, world\n");
     return 0;
 }

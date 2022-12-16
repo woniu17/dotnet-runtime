@@ -129,7 +129,17 @@ set(OBJECT_UTILCODE_COMMON_SOURCES
   longfilepathwrappers.cpp
   yieldprocessornormalized.cpp
 )
-set(UTILCODE_OBJECTNOHOST_SOURCES
+# These source file do not yet compile on Linux.
+# They should be moved out from here into the declaration
+# of UTILCODE_SOURCES above after fixing compiler errors.
+if(CLR_CMAKE_TARGET_WIN32)
+  list(APPEND OBJECT_UTILCODE_COMMON_SOURCES
+    dacutil.cpp
+    dlwrap.cpp
+    stacktrace.cpp
+  )
+endif(CLR_CMAKE_TARGET_WIN32)
+set(OBJECT_UTILCODE_COMMON_SOURCES
   ${OBJECT_UTILCODE_COMMON_SOURCES}
   hostimpl.cpp
 )
@@ -139,14 +149,14 @@ set (UTILCODE_DEPENDENCIES eventing_headers)
 convert_to_absolute_path(UTILCODE_SOURCES ${UTILCODE_SOURCES})
 convert_to_absolute_path(UTILCODE_DAC_SOURCES ${UTILCODE_DAC_SOURCES})
 convert_to_absolute_path(UTILCODE_STATICNOHOST_SOURCES ${UTILCODE_STATICNOHOST_SOURCES})
-convert_to_absolute_path(UTILCODE_OBJECTNOHOST_SOURCES ${UTILCODE_OBJECTNOHOST_SOURCES})
+convert_to_absolute_path(OBJECT_UTILCODE_COMMON_SOURCES ${OBJECT_UTILCODE_COMMON_SOURCES})
 
 add_library_clr(utilcode_dac STATIC ${UTILCODE_DAC_SOURCES})
 add_library_clr(utilcode_obj OBJECT ${UTILCODE_SOURCES})
 add_library(utilcode INTERFACE)
 target_sources(utilcode INTERFACE $<TARGET_OBJECTS:utilcode_obj>)
 add_library_clr(utilcodestaticnohost STATIC ${UTILCODE_STATICNOHOST_SOURCES})
-add_library_clr(utilcodestaticnohost_obj OBJECT ${UTILCODE_OBJECTNOHOST_SOURCES})
+add_library_clr(utilcodestaticnohost_obj OBJECT ${OBJECT_UTILCODE_COMMON_SOURCES})
 
 if(CLR_CMAKE_HOST_UNIX)
   target_link_libraries(utilcodestaticnohost  nativeresourcestring)

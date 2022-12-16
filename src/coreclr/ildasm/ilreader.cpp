@@ -459,7 +459,7 @@ int my_api()
     wchar_t *v;
     v = (wchar_t*)W("ildasm");
     vv[0] = v;
-    v = (wchar_t*) W("/root/.dotnet/sdk/6.0.403/Microsoft.Build.dll");
+    v = (wchar_t*) W("C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\Microsoft.Build.dll");
     vv[1] = v;
     wchar_t **argv = (wchar_t **) vv;
 #else

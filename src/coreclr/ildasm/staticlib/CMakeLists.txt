@@ -63,7 +63,7 @@ add_library_clr(ilreader STATIC ${ILDASM_SOURCES} ${ILDASM_RESOURCES})
 
 set(ILDASM_LINK_LIBRARIES
     ${START_LIBRARY_GROUP} # Start group of libraries that have circular references
-    nativeresourcestring_obj
+    # nativeresourcestring_obj
     utilcodestaticnohost_obj
     mdcompiler_wks
     mdruntime_wks
