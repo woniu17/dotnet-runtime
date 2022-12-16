@@ -102,7 +102,15 @@ if not "%__ConfigureOnly%" == "1" (
 if /i "%__UseEmcmake%" == "1" (
     call "!EMSDK_PATH!/emsdk_env.bat" > nul 2>&1 && emcmake "%CMakePath%" %__ExtraCmakeParams% --no-warn-unused-cli -G "%__CmakeGenerator%" -B %__IntermediatesDir% -S %__SourceDir%
 ) else (
+    echo "%CMakePath%" %__ExtraCmakeParams% --no-warn-unused-cli -G "%__CmakeGenerator%" -B %__IntermediatesDir% -S %__SourceDir%
     "%CMakePath%" %__ExtraCmakeParams% --no-warn-unused-cli -G "%__CmakeGenerator%" -B %__IntermediatesDir% -S %__SourceDir%
+    REM "C:\Program Files\CMake\bin\cmake.exe"
+    REM "-DCMAKE_INSTALL_PREFIX=D:/code/dotnet-runtime/src/coreclr/../../artifacts/bin/coreclr/windows.x64.Debug"
+    REM "-DCLR_CMAKE_HOST_ARCH=x64"  -A x64  "-DCMAKE_SYSTEM_VERSION=10.0" "-DCLR_CMAKE_TARGET_ARCH=x64"
+    REM "-DCLR_CMAKE_TARGET_OS=windows" "-DCLR_CMAKE_PGO_INSTRUMENT=0" "-DCLR_CMAKE_OPTDATA_PATH="
+    REM "-DCLR_CMAKE_PGO_OPTIMIZE=0" --no-warn-unused-cli -G "Visual Studio 17 2022"
+    REM -B "D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\obj\coreclr\windows.x64.Debug\ide"
+    REM -S "D:\code\dotnet-runtime\src\coreclr"
 )
 endlocal
 exit /B %errorlevel%

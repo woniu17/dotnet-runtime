@@ -360,6 +360,7 @@ if %__BuildNative% EQU 1 (
     REM vs2022 x64 windows  "-DCLR_CMAKE_TARGET_ARCH=x64" "-DCLR_CMAKE_TARGET_OS=windows"
     REM "-DCLR_CMAKE_PGO_INSTRUMENT=0" "-DCLR_CMAKE_OPTDATA_PATH=" "-DCLR_CMAKE_PGO_OPTIMIZE=0"
     call "%__RepoRootDir%\eng\native\gen-buildsys.cmd" "%__ProjectDir%" "%__IntermediatesDir%" %__VSVersion% %__HostArch% %__TargetOS% !__ExtraCmakeArgs!
+    @REM goto ExitWithCode
     if not !errorlevel! == 0 (
         echo %__ErrMsgPrefix%%__MsgPrefix%Error: failed to generate native component build project!
         goto ExitWithError
@@ -404,6 +405,7 @@ if %__BuildNative% EQU 1 (
     REM /bl:"D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\log\Debug\CoreCLR_windows__x64__Debug__x64.binlog"
     REM /clp:ForceNoAlign;Summary
     "%CMakePath%" --build %__IntermediatesDir% --target %__CMakeTarget% --config %__BuildType% -- !__CmakeBuildToolArgs!
+    @REM goto ExitWithCode
 
     if not !errorlevel! == 0 (
         set __exitCode=!errorlevel!
