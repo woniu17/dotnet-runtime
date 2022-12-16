@@ -1,0 +1,1 @@
+build-runtime.cmd -msbuild -skiprestoreoptdata -skipcrossarchnative

@@ -453,6 +453,16 @@ int ParseCmdLine(int argc, _In_ __nullterminated char* argv[], _Out_ char** ppsz
 int my_api()
 {
     int argc = 2;
+
+#ifdef HOST_WINDOWS
+    wchar_t * vv[2];
+    wchar_t *v;
+    v = (wchar_t*)W("ildasm");
+    vv[0] = v;
+    v = (wchar_t*) W("/root/.dotnet/sdk/6.0.403/Microsoft.Build.dll");
+    vv[1] = v;
+    wchar_t **argv = (wchar_t **) vv;
+#else
     char * vv[2];
     char *v;
     v = (char*)"ildasm";
@@ -460,6 +470,8 @@ int my_api()
     v = (char*)"/root/.dotnet/sdk/6.0.403/Microsoft.Build.dll";
     vv[1] = v;
     char **argv = (char **) vv;
+#endif
+
 #if defined(TARGET_UNIX)
     if (0 != PAL_Initialize(argc, argv))
     {

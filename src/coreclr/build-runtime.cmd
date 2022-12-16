@@ -355,6 +355,10 @@ if %__BuildNative% EQU 1 (
 
     set __ExtraCmakeArgs=!__ExtraCmakeArgs! "-DCLR_CMAKE_TARGET_ARCH=%__TargetArch%" "-DCLR_CMAKE_TARGET_OS=%__TargetOS%" "-DCLR_CMAKE_PGO_INSTRUMENT=%__PgoInstrument%" "-DCLR_CMAKE_OPTDATA_PATH=%__PgoOptDataPath%" "-DCLR_CMAKE_PGO_OPTIMIZE=%__PgoOptimize%" %__CMakeArgs%
     echo Calling "%__RepoRootDir%\eng\native\gen-buildsys.cmd" "%__ProjectDir%" "%__IntermediatesDir%" %__VSVersion% %__HostArch% %__TargetOS% !__ExtraCmakeArgs!
+    REM Calling "D:\code\dotnet-runtime\src\coreclr\..\..\eng\native\gen-buildsys.cmd"
+    REM "D:\code\dotnet-runtime\src\coreclr" "D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\obj\coreclr\windows.x64.Debug\ide"
+    REM vs2022 x64 windows  "-DCLR_CMAKE_TARGET_ARCH=x64" "-DCLR_CMAKE_TARGET_OS=windows"
+    REM "-DCLR_CMAKE_PGO_INSTRUMENT=0" "-DCLR_CMAKE_OPTDATA_PATH=" "-DCLR_CMAKE_PGO_OPTIMIZE=0"
     call "%__RepoRootDir%\eng\native\gen-buildsys.cmd" "%__ProjectDir%" "%__IntermediatesDir%" %__VSVersion% %__HostArch% %__TargetOS% !__ExtraCmakeArgs!
     if not !errorlevel! == 0 (
         echo %__ErrMsgPrefix%%__MsgPrefix%Error: failed to generate native component build project!
@@ -391,6 +395,14 @@ if %__BuildNative% EQU 1 (
     )
 
     echo running "%CMakePath%" --build %__IntermediatesDir% --target %__CMakeTarget% --config %__BuildType% -- !__CmakeBuildToolArgs!
+    REM "C:\Program Files\CMake\bin\cmake.exe"
+    REM --build D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\obj\coreclr\windows.x64.Debug\ide
+    REM --target install --config Debug -- /nologo /m
+    REM /flp:Verbosity=normal;LogFile="D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\log\Debug\CoreCLR_windows__x64__Debug__x64.log"
+    REM /flp1:WarningsOnly;LogFile="D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\log\Debug\CoreCLR_windows__x64__Debug__x64.wrn"
+    REM /flp2:ErrorsOnly;LogFile="D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\log\Debug\CoreCLR_windows__x64__Debug__x64.err"
+    REM /bl:"D:\code\dotnet-runtime\src\coreclr\..\..\artifacts\log\Debug\CoreCLR_windows__x64__Debug__x64.binlog"
+    REM /clp:ForceNoAlign;Summary
     "%CMakePath%" --build %__IntermediatesDir% --target %__CMakeTarget% --config %__BuildType% -- !__CmakeBuildToolArgs!
 
     if not !errorlevel! == 0 (
